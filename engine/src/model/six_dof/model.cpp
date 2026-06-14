@@ -19,7 +19,7 @@ void korsim::six_dof::Model::calculateDynamics(const State& x, const Control& u,
     double vel_mod = x.v.norm();
     double alpha = std::atan(x.v.z()/x.v.x());
     double beta = std::asin(x.v.y()/vel_mod);
-    
+
     double sin_a = std::sin(alpha);
     double sin_b = std::sin(beta);
     double cos_a = std::cos(alpha);
@@ -66,7 +66,7 @@ void korsim::six_dof::Model::calculateDynamics(const State& x, const Control& u,
     double NH = qh * p.S * p.ch * Cn;
 
     Vector3d M_a = Vector3d(LH, MH, NH) + F_a.cross(p.p_cg - p.p_ac);
-    Vector3d M_e = (p.p_cg - p.p_t);
+    Vector3d M_e = (p.p_cg - p.p_t).cross(F_e);
 
     x_dot.p =  R_b2i * x.v + p.wind_vel; // !!!!!!!!!!!11
     x_dot.v = F_total / p.mass - x.omega.cross( x.v.transpose() ); // !!!!!!!!!!!11
