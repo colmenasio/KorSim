@@ -109,6 +109,7 @@ void SixDofAircraft::_process(double p_delta)
     }
     Vector3 new_pos = util::posAerospaceToGodot(state.p);
     Vector3 new_rot = util::eulerAerospaceToGodot(state.phi);
+    return;
     ERR_FAIL_COND_MSG(!new_pos.is_finite() || !new_rot.is_finite(), "Model went to NaN. Yippie!!"); 
 
     this->set_position(new_pos);
@@ -122,6 +123,12 @@ void SixDofAircraft::_physics_process(double p_delta)
     //Eigen::Matrix3d curr_pos
     //state.p = 
     //state.v = 
+    static int a;
+    if(a >= 10){
+        return;
+    }
+    a++;
+
     if(godot::Engine::get_singleton()->is_editor_hint()){
         return;
     }

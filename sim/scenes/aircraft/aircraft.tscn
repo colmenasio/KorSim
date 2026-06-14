@@ -12,12 +12,10 @@ material = SubResource("StandardMaterial3D_o0t3e")
 radius = 5.0
 height = 20.0
 
-[node name="Aircraft" type="Node3D" unique_id=1571406391]
+[node name="Aircraft" type="SixDofAircraft" unique_id=1744680911]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1141025109]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_8odoo")
 
 [node name="GridSphereGizmo" parent="." unique_id=2090342941 instance=ExtResource("1_o0t3e")]
-
-[node name="SixDofAircraft" type="SixDofAircraft" parent="." unique_id=1940484470]
