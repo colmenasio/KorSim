@@ -3,6 +3,8 @@
 using namespace Eigen;
 using namespace korsim::util;
 
+#include <iostream>
+
 inline double square(double x){
     return x*x;
 } 
@@ -34,10 +36,9 @@ void korsim::six_dof::Model::calculateDynamics(const State& x, const Control& u,
     double CL_t = p.CL_alpha_t * alpha_t * p.S_t / p.S ;
     double CL = CL_t + CL_wb;
 
-    double CD = p.CD_0 + p.CD_2 * square(p.CD_a * alpha + p.CD_1);
+    double CD = p.CD_0 + p.CD_2 * square(p.CD_alpha * alpha + p.CD_1);
 
-    double CY = p.CY_b * beta + p.CY_delta_R * u.delta_R;
-
+    double CY = p.CY_beta * beta + p.CY_delta_R * u.delta_R;
 
     double Cl = p.Cl_beta * beta + p.Cl_p * omr * p.ch / vel_mod + p.Cl_delta_A * u.delta_A + p.Cl_delta_R * u.delta_R; 
     double Cm = p.Cm_0 + (p.Cm_alpha * (alpha - epsilon) + p.Cm_q * p.l_t * omq / vel_mod + p.Cm_delta_E * u.delta_E ) * p.S_t * p.l_t /(p.S * p.ch);
@@ -71,5 +72,5 @@ void korsim::six_dof::Model::calculateDynamics(const State& x, const Control& u,
     x_dot.v = F_total / p.mass - x.omega.cross( x.v.transpose() ); // !!!!!!!!!!!11
     x_dot.phi= inverseKinematicJacobian(x.phi) * x.omega; // !!!!!!!!!!!11
     x_dot.omega = p.moment_inertia.inverse() * (M_e + M_a - x.omega.cross(p.moment_inertia * x.omega)); // !!!!!!!!!!!11
-    x_dot.delta_t = (u.eta_t - x.delta_t)/p.tau_t; // !!!!!!!!!!!11
+    x_dot.delta_t = (u.eta_T - x.delta_t)/p.tau_t; // !!!!!!!!!!!11
 }
