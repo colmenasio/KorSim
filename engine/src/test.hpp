@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/sprite2d.hpp>
+#include <Eigen/Dense>
 
 namespace godot {
 
@@ -9,6 +10,7 @@ class GDExample : public Sprite2D {
 
 private:
 	double time_passed;
+	Eigen::Matrix2f test;
 
 protected:
 	static void _bind_methods();

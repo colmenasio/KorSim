@@ -10,6 +10,7 @@ env = SConscript("godot-cpp/SConstruct")
 
 # Configures the 'src' directory as a source for header files.
 env.Append(CPPPATH=["src/"])
+env.Append(CPPPATH=["/usr/include/eigen3"])
 
 # Collects all .cpp files in the 'src' folder as compile targets.
 sources = Glob("src/*.cpp")

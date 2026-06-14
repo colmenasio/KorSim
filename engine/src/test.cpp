@@ -1,5 +1,6 @@
 #include "test.hpp"
 #include <godot_cpp/core/class_db.hpp>
+#include <iostream>
 
 using namespace godot;
 
@@ -9,6 +10,7 @@ void GDExample::_bind_methods() {
 GDExample::GDExample() {
 	// Initialize any variables here.
 	time_passed = 0.0;
+	test << 1 , 1 , 2 , 3 ;
 }
 
 GDExample::~GDExample() {
