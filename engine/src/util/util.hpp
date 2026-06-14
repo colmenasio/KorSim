@@ -7,9 +7,9 @@ namespace korsim::util
 {
     inline Eigen::Matrix3d rotationFromEuler(const Eigen::Vector3d &roll_pitch_yaw)
     {
-        double yaw = roll_pitch_yaw(0);
+        double roll = roll_pitch_yaw(0);
         double pitch = roll_pitch_yaw(1);
-        double roll = roll_pitch_yaw(2);
+        double yaw = roll_pitch_yaw(2);
 
         const double cy = std::cos(yaw);
         const double sy = std::sin(yaw);
@@ -39,6 +39,45 @@ namespace korsim::util
     inline Eigen::Matrix3d inverseRotationFromEuler(const Eigen::Vector3d &roll_pitch_yaw)
     {
         return rotationFromEuler(roll_pitch_yaw).transpose(); // Ortonormal :3
+    }
+
+    inline Eigen::Matrix3d inverseKinematicJacobian(const Eigen::Vector3d &roll_pitch_yaw, double epsilon = 1e-4)
+    {
+        double roll = roll_pitch_yaw(0);
+        double pitch = roll_pitch_yaw(1);
+
+        double cp = std::cos(pitch);
+        const double sp = std::sin(pitch);
+        const double cr = std::cos(roll);
+        const double sr = std::sin(roll);
+
+        // gimball i curse you!!
+        if(std::abs(cp) < epsilon){
+            if(cp >= 0) {
+                cp = epsilon;
+            } else {
+                cp = -epsilon;
+            }
+        }
+
+        const double tp = sp / cp;
+
+        // Tipica matriz que es coñazo de debuggear...
+        Eigen::Matrix3d R;
+
+        R(0, 0) = 1;
+        R(0, 1) = sr * tp ;
+        R(0, 2) = cr * tp;
+
+        R(1, 0) = 0;
+        R(1, 1) = cr;
+        R(1, 2) = -sr;
+
+        R(2, 0) = 0;
+        R(2, 1) = sr / cp;
+        R(2, 2) = cr / cp;
+
+        return R;
     }
 
     // Aerospace ned : X=North, Y=East, Z=Down

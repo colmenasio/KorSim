@@ -16,9 +16,9 @@ env.Append(CPPPATH=["/usr/include/eigen3"])
 
 # Collects all .cpp files in the 'src' folder as compile targets.
 sources = []
-sources.append(Glob("build/*.cpp"))
-sources.append(Glob("build/**/*.cpp"))
-
+sources.extend(Glob("build/*.cpp"))
+sources.extend(Glob("build/model/six_dof/*.cpp"))
+sources.extend(Glob("build/test/*.cpp"))
 
 # The filename for the dynamic library for this GDExtension.
 # $SHLIBPREFIX is a platform specific prefix for the dynamic library ('lib' on Unix, '' on Windows).
