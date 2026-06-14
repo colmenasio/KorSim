@@ -22,4 +22,4 @@ public:
 	void _process(double delta) override;
 };
 
-} // namespace godot
+}

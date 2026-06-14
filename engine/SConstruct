@@ -5,15 +5,18 @@ import sys
 # You can find documentation for SCons and SConstruct files at:
 # https://scons.org/documentation.html
 
+VariantDir("build", "src", duplicate=0)
+
 # This lets SCons know that we're using godot-cpp, from the godot-cpp folder.
 env = SConscript("godot-cpp/SConstruct")
 
 # Configures the 'src' directory as a source for header files.
-env.Append(CPPPATH=["src/"])
+env.Append(CPPPATH=["build/"])
 env.Append(CPPPATH=["/usr/include/eigen3"])
 
 # Collects all .cpp files in the 'src' folder as compile targets.
-sources = Glob("src/*.cpp")
+sources = Glob("build/*.cpp")
+
 
 # The filename for the dynamic library for this GDExtension.
 # $SHLIBPREFIX is a platform specific prefix for the dynamic library ('lib' on Unix, '' on Windows).

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cynqyag4wclwg"]
+
+[ext_resource type="PackedScene" uid="uid://cxgqt7bbcsk4c" path="res://scenes/grid_sphere_gizmo/grid_sphere_gizmo.tscn" id="1_o0t3e"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_8odoo"]
+radius = 5.0
+height = 20.0
+
+[node name="Aircraft" type="Node3D" unique_id=1955491949]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1141025109]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -0.2, 0, 1, -8.742278e-09, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_8odoo")
+
+[node name="GridSphereGizmo" parent="." unique_id=2090342941 instance=ExtResource("1_o0t3e")]
