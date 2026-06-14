@@ -81,7 +81,7 @@ namespace korsim::six_dof
         Eigen::Vector3d omega = Eigen::Vector3d::Zero();
         double delta_t = 0;
 
-        void loadMatrix(const Eigen::Matrix<double, 13, 1>& blob)
+        void loadMatrix(const Eigen::Matrix<double, 13, 1> &blob)
         {
             p = blob.segment<3>(0);
             v = blob.segment<3>(3);
@@ -105,9 +105,25 @@ namespace korsim::six_dof
     class Model
     {
         State x_dot;
+
+        double alpha;
+        double beta;
+        double alpha_t;
+
+        double CL;
+        double CD;
+        double CY;
+
+        double Cl;
+        double Cm;
+        double Cn;
+        
         Eigen::Vector3d F_e;
         Eigen::Vector3d F_a;
         Eigen::Vector3d F_g;
+
+        Eigen::Vector3d M_a;
+        Eigen::Vector3d M_e;
 
     public:
         // Calculates the dynamics and stores all results internally. Said results can be obtained with their respective getters
@@ -119,7 +135,20 @@ namespace korsim::six_dof
         Eigen::Vector3d getAerodynamicForce() const { return F_a; };
         Eigen::Vector3d getGravityForce() const { return F_g; };
 
-        // etc... en un furturo
+        Eigen::Vector3d getEngineMoment() const { return M_e; };
+        Eigen::Vector3d getAerodynamicMoment() const { return M_a; };
+
+        double getAngleOfAttack() const {return alpha;}
+        double getAngleOfAttackTail() const {return alpha_t;}
+        double getSideslipAngle() const {return beta;}
+
+        double getLiftCoeff() const {return CL;}
+        double getDragCoeff() const {return CD;}
+        double getSideforceCoeff() const {return CY;}
+
+        double getRollingMomentCoeff() const {return Cl;}
+        double getPitchingMomentCoeff() const {return Cm;}
+        double getYawingMomentCoeff() const {return Cn;}
     };
 
 }

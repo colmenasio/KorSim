@@ -1,0 +1,188 @@
+[gd_scene format=3 uid="uid://c4vubgkvtc7q0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eslqy"]
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.1, 0.1, 0.1, 0.3)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_03rme"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(1, 1, 1, 0.4)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 4
+
+[node name="SimMainUI" type="CanvasLayer" unique_id=922075414]
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=782506859]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ControlVisualization" type="PanelContainer" parent="MarginContainer" unique_id=1864719072]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/ControlVisualization" unique_id=912700153]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="GridContainer" parent="MarginContainer/ControlVisualization/MarginContainer" unique_id=1575101248]
+layout_mode = 2
+theme_override_constants/h_separation = 10
+columns = 6
+
+[node name="Padd" type="Control" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=467260416]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1011584522]
+layout_mode = 2
+text = "𝛿A"
+
+[node name="Label2" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1160261103]
+layout_mode = 2
+text = "𝛿R"
+
+[node name="Label3" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=560058707]
+layout_mode = 2
+text = "𝛿E"
+
+[node name="Padd2" type="Control" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=540385368]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1393676975]
+layout_mode = 2
+text = "𝜏T"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1451756498]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer" unique_id=553518657]
+layout_mode = 2
+size_flags_vertical = 0
+text = "+1"
+
+[node name="Padd" type="Control" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1823648509]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer" unique_id=1147381228]
+layout_mode = 2
+size_flags_vertical = 8
+text = "-1"
+
+[node name="ControlBarDA" type="ProgressBar" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=2110000977]
+custom_minimum_size = Vector2(18, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_eslqy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_03rme")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="ControlBarDR" type="ProgressBar" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1156797849]
+custom_minimum_size = Vector2(18, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_eslqy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_03rme")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="ControlBarDE" type="ProgressBar" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=1766809762]
+custom_minimum_size = Vector2(18, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_eslqy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_03rme")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=484733104]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=78326359]
+layout_mode = 2
+size_flags_vertical = 0
+text = "1"
+
+[node name="Control" type="Control" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=1527559932]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer/VBoxContainer2" unique_id=816232434]
+layout_mode = 2
+size_flags_vertical = 8
+text = "0"
+
+[node name="ControlBarTR" type="ProgressBar" parent="MarginContainer/ControlVisualization/MarginContainer/HBoxContainer" unique_id=453840760]
+custom_minimum_size = Vector2(18, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/background = SubResource("StyleBoxFlat_eslqy")
+theme_override_styles/fill = SubResource("StyleBoxFlat_03rme")
+min_value = -1.0
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="StatsViualization" type="PanelContainer" parent="MarginContainer" unique_id=605579237]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/StatsViualization" unique_id=1117152359]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Stats" type="VBoxContainer" parent="MarginContainer/StatsViualization/MarginContainer" unique_id=1210251835]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/StatsViualization/MarginContainer/Stats" unique_id=1669071500]
+layout_mode = 2
+text = "FPS: "
+
+[node name="Label2" type="Label" parent="MarginContainer/StatsViualization/MarginContainer/Stats" unique_id=1252895781]
+layout_mode = 2
+text = "Average model timestep: "

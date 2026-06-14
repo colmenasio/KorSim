@@ -11,6 +11,7 @@ VariantDir("build", "src", duplicate=0)
 env = SConscript("godot-cpp/SConstruct")
 
 # Configures the 'src' directory as a source for header files.
+env.Append(CFLAGS = ['-std=c17'])
 env.Append(CPPPATH=["build/"])
 env.Append(CPPPATH=["/usr/include/eigen3"])
 

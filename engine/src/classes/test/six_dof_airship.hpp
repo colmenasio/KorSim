@@ -6,6 +6,7 @@
 #include <godot_cpp/classes/engine.hpp>
 
 #include "model/six_dof/model.hpp"
+#include "model/six_dof/logger.hpp"
 
 
 // Forward euler pq despues de estar 8 horas programando, va a hacer runge kutta su abuela en motocicleta !!!!! :D
@@ -18,6 +19,10 @@ class SixDofAircraft : public godot::Node3D
     korsim::six_dof::State state;
 
     korsim::six_dof::Model model;
+
+    korsim::six_dof::Logger logger;
+
+    bool has_exploded;
 
     protected:
     static void _bind_methods();

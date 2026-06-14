@@ -11,9 +11,17 @@ config_version=5
 [application]
 
 config/name="KorSim"
-run/main_scene="uid://cbeilrjqo5k85"
+run/main_scene="uid://c2p54h8q5tb3u"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Sim="*uid://4qmmmh2noqsj"
+
+[display]
+
+window/size/mode=4
 
 [dotnet]
 

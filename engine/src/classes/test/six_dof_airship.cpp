@@ -97,7 +97,7 @@ void SixDofAircraft::_bind_methods()
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "airspace_velocity", PROPERTY_HINT_RANGE, "0.0,1.0,0.01"), "set_airspace_velocity", "get_airspace_velocity");
 }
 
-SixDofAircraft::SixDofAircraft()
+SixDofAircraft::SixDofAircraft() : has_exploded(false), logger("log.last")
 {
     this->parameters = createFighterParameters();
 }
@@ -107,10 +107,14 @@ void SixDofAircraft::_process(double p_delta)
     if(godot::Engine::get_singleton()->is_editor_hint()){
         return;
     }
+    if(has_exploded){
+        return;
+    }
+
     Vector3 new_pos = util::posAerospaceToGodot(state.p);
     Vector3 new_rot = util::eulerAerospaceToGodot(state.phi);
-    return;
-    ERR_FAIL_COND_MSG(!new_pos.is_finite() || !new_rot.is_finite(), "Model went to NaN. Yippie!!"); 
+    this->has_exploded = !new_pos.is_finite() || !new_rot.is_finite();
+    ERR_FAIL_COND_MSG(has_exploded, "Model went to NaN and exploded. Yippie!!"); 
 
     this->set_position(new_pos);
     this->set_rotation(new_rot);
@@ -123,18 +127,21 @@ void SixDofAircraft::_physics_process(double p_delta)
     //Eigen::Matrix3d curr_pos
     //state.p = 
     //state.v = 
-    static int a;
-    if(a >= 10){
+
+    if(has_exploded){
         return;
     }
-    a++;
 
     if(godot::Engine::get_singleton()->is_editor_hint()){
         return;
     }
+    logger.log("---------[State]----------\n");
+    logger.log(state);
 
-    model.calculateDynamics(state, control, parameters);
     this->integrateDynamics(p_delta);
+
+    logger.log("---------[Dynamics]----------\n");
+    logger.log(model);
 }
 
 void SixDofAircraft::integrateDynamics(double h)
@@ -142,6 +149,8 @@ void SixDofAircraft::integrateDynamics(double h)
     // what the fucc is runge kuttaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     // forward euler foreverrrrrrrrrrrrrrrrrrrrrrr
     // rawrrrrrrrrrrrrrrrrrrrrrrrr
+    model.calculateDynamics(state, control, parameters);
+
     Eigen::Matrix<double, 13, 1> x = this->state.toMatrix();
     Eigen::Matrix<double, 13, 1> x_dot = this->model.getDynamics().toMatrix();
 
