@@ -15,7 +15,9 @@ env.Append(CPPPATH=["build/"])
 env.Append(CPPPATH=["/usr/include/eigen3"])
 
 # Collects all .cpp files in the 'src' folder as compile targets.
-sources = Glob("build/*.cpp")
+sources = []
+sources.append(Glob("build/*.cpp"))
+sources.append(Glob("build/**/*.cpp"))
 
 
 # The filename for the dynamic library for this GDExtension.
