@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://cynqyag4wclwg"]
 
 [ext_resource type="PackedScene" uid="uid://cxgqt7bbcsk4c" path="res://scenes/grid_sphere_gizmo/grid_sphere_gizmo.tscn" id="1_o0t3e"]
+[ext_resource type="Script" uid="uid://c3bv4imb1ivx0" path="res://scenes/aircraft/aircraft.gd" id="1_ose1e"]
 [ext_resource type="PackedScene" uid="uid://beau6qytm8b5q" path="res://assets/dassault_mirage_2000/dassault_mirage_2000.glb" id="2_ose1e"]
 
 [node name="Aircraft" type="SixDofAircraft" unique_id=1744680911]
+script = ExtResource("1_ose1e")
 
 [node name="GridSphereGizmo" parent="." unique_id=2090342941 instance=ExtResource("1_o0t3e")]
 

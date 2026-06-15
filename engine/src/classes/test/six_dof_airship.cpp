@@ -26,7 +26,8 @@ Parameters createFighterParameters()
     p.p_ac = Eigen::Vector3d(0.45, 0.0, 0.0); // m (aerodynamic center, 0.45m ahead of CG for static margin)
     p.p_t = Eigen::Vector3d(-4.2, 0.0, -0.3); // m (engine thrust line, behind and slightly below CG)
 
-    p.wind_vel = Eigen::Vector3d(8.0, 0.0, 0.0); // m/s (just a little bit o' banter)
+    //p.wind_vel = Eigen::Vector3d(8.0, 0.0, 0.0); // m/s (just a little bit o' banter)
+    p.wind_vel = Eigen::Vector3d(0.0, 0.0, 0.0); // m/s (just a little bit o' banter)
 
     p.alpha_0 = 0.0;        // rad (zero-lift AOA)
     p.epsilon_alpha = 0.35; // downwash gradient
@@ -75,6 +76,10 @@ Parameters createFighterParameters()
 
 void SixDofAircraft::_bind_methods()
 { 
+    // Esto cundiria sacarlo para que a ojos de godot el model runner sea un recurso rather que un nodo y hacer los bindings desde godot...
+    ClassDB::bind_method(D_METHOD("update_dynamics", "delta"), &SixDofAircraft::updateDynamics);
+    ClassDB::bind_method(D_METHOD("update_transform"), &SixDofAircraft::updateTransform);
+
     ClassDB::bind_method(D_METHOD("set_aileron_deflector", "value"), &SixDofAircraft::setDeltaA);
     ClassDB::bind_method(D_METHOD("get_aileron_deflector"), &SixDofAircraft::getDeltaA);
 
@@ -90,11 +95,19 @@ void SixDofAircraft::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_airspace_velocity", "value"), &SixDofAircraft::setAirspaceVelocity);
     ClassDB::bind_method(D_METHOD("get_airspace_velocity"), &SixDofAircraft::getAirspaceVelocity);
 
+    ClassDB::bind_method(D_METHOD("set_wind_velocity", "value"), &SixDofAircraft::setWindVelocity);
+    ClassDB::bind_method(D_METHOD("get_wind_velocity"), &SixDofAircraft::getWindVelocity);
+
+    ClassDB::bind_method(D_METHOD("get_aerodynamic_force"), &SixDofAircraft::getAerodynamicForce);
+    ClassDB::bind_method(D_METHOD("get_engine_force"), &SixDofAircraft::getEngineForce);
+    ClassDB::bind_method(D_METHOD("get_gravity_force"), &SixDofAircraft::getGravityForce);
+
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "aileron_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_aileron_deflector", "get_aileron_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rudder_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_rudder_deflector", "get_rudder_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "elevator_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_elevator_deflector", "get_elevator_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "throttle", PROPERTY_HINT_RANGE, "0.0,1.0,0.01"), "set_throttle", "get_throttle");
-    ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "airspace_velocity", PROPERTY_HINT_RANGE, "0.0,1.0,0.01"), "set_airspace_velocity", "get_airspace_velocity");
+    ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "airspace_velocity"), "set_airspace_velocity", "get_airspace_velocity");
+    ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "wind_velocity"), "set_airspace_velocity", "get_airspace_velocity");
 }
 
 SixDofAircraft::SixDofAircraft() : has_exploded(false), logger("log.last")
@@ -102,11 +115,8 @@ SixDofAircraft::SixDofAircraft() : has_exploded(false), logger("log.last")
     this->parameters = createFighterParameters();
 }
 
-void SixDofAircraft::_process(double p_delta)
+void SixDofAircraft::updateTransform()
 {
-    if(godot::Engine::get_singleton()->is_editor_hint()){
-        return;
-    }
     if(has_exploded){
         return;
     }
@@ -120,39 +130,25 @@ void SixDofAircraft::_process(double p_delta)
     this->set_rotation(new_rot);
 }
 
-void SixDofAircraft::_physics_process(double p_delta)
-{
-    // just in the remote remote tiny bitty case where the propperties have changed in godot
-    // on every write from state to the sim, store the values. if they have changed that means somthing in the sim have changed them, and we need to ovewrite state.p and state.phi. yahoo!
-    //Eigen::Matrix3d curr_pos
-    //state.p = 
-    //state.v = 
-
-    if(has_exploded){
-        return;
-    }
-
-    if(godot::Engine::get_singleton()->is_editor_hint()){
-        return;
-    }
-    logger.log("---------[State]----------\n");
-    logger.log(state);
-
-    this->integrateDynamics(p_delta);
-
-    logger.log("---------[Dynamics]----------\n");
-    logger.log(model);
-}
-
-void SixDofAircraft::integrateDynamics(double h)
+void SixDofAircraft::updateDynamics(double h)
 {
     // what the fucc is runge kuttaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     // forward euler foreverrrrrrrrrrrrrrrrrrrrrrr
     // rawrrrrrrrrrrrrrrrrrrrrrrrr
+    if(has_exploded){
+        return;
+    }
+
+    logger.log("---------[State]----------\n");
+    logger.log(state);
+
     model.calculateDynamics(state, control, parameters);
 
     Eigen::Matrix<double, 13, 1> x = this->state.toMatrix();
     Eigen::Matrix<double, 13, 1> x_dot = this->model.getDynamics().toMatrix();
 
     this->state.loadMatrix(x + h * x_dot);
+    
+    logger.log("---------[Dynamics]----------\n");
+    logger.log(model);
 }
