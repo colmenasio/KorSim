@@ -1,17 +1,24 @@
 [gd_scene format=3 uid="uid://cxgqt7bbcsk4c"]
 
 [ext_resource type="Script" uid="uid://dqiedu8jpiadm" path="res://scenes/grid_sphere_gizmo/grid_sphere_gizmo.gd" id="1_x2ma6"]
+[ext_resource type="Shader" uid="uid://w6jxgbtk40uq" path="res://scenes/aircraft/sphere_gizmo.gdshader" id="2_82d0e"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x2ma6"]
-albedo_color = Color(0.8627451, 0.078431375, 0.23529412, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_newat"]
+render_priority = 0
+shader = ExtResource("2_82d0e")
+shader_parameter/max_d = 80.0
+shader_parameter/min_d = 70.0
+shader_parameter/albedo = Color(0.8627451, 0.078431375, 0.23529412, 1)
 
-[sub_resource type="SphereMesh" id="SphereMesh_82d0e"]
-material = SubResource("StandardMaterial3D_x2ma6")
+[sub_resource type="SphereMesh" id="SphereMesh_7ara1"]
+material = SubResource("ShaderMaterial_newat")
+radius = 1.0
+height = 2.0
 
-[sub_resource type="MultiMesh" id="MultiMesh_newat"]
+[sub_resource type="MultiMesh" id="MultiMesh_vv0vi"]
 transform_format = 1
 instance_count = 27
-mesh = SubResource("SphereMesh_82d0e")
+mesh = SubResource("SphereMesh_7ara1")
 buffer = PackedFloat32Array(1, 0, 0, -60, 0, 1, 0, -60, 0, 0, 1, -60, 1, 0, 0, -60, 0, 1, 0, -60, 0, 0, 1, 0, 1, 0, 0, -60, 0, 1, 0, -60, 0, 0, 1, 60, 1, 0, 0, -60, 0, 1, 0, 0, 0, 0, 1, -60, 1, 0, 0, -60, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, -60, 0, 1, 0, 0, 0, 0, 1, 60, 1, 0, 0, -60, 0, 1, 0, 60, 0, 0, 1, -60, 1, 0, 0, -60, 0, 1, 0, 60, 0, 0, 1, 0, 1, 0, 0, -60, 0, 1, 0, 60, 0, 0, 1, 60, 1, 0, 0, 0, 0, 1, 0, -60, 0, 0, 1, -60, 1, 0, 0, 0, 0, 1, 0, -60, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, -60, 0, 0, 1, 60, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, -60, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 60, 1, 0, 0, 0, 0, 1, 0, 60, 0, 0, 1, -60, 1, 0, 0, 0, 0, 1, 0, 60, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 60, 0, 0, 1, 60, 1, 0, 0, 60, 0, 1, 0, -60, 0, 0, 1, -60, 1, 0, 0, 60, 0, 1, 0, -60, 0, 0, 1, 0, 1, 0, 0, 60, 0, 1, 0, -60, 0, 0, 1, 60, 1, 0, 0, 60, 0, 1, 0, 0, 0, 0, 1, -60, 1, 0, 0, 60, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 60, 0, 1, 0, 0, 0, 0, 1, 60, 1, 0, 0, 60, 0, 1, 0, 60, 0, 0, 1, -60, 1, 0, 0, 60, 0, 1, 0, 60, 0, 0, 1, 0, 1, 0, 0, 60, 0, 1, 0, 60, 0, 0, 1, 60)
 
 [node name="GridSphereGizmo" type="Node3D" unique_id=2090342941]
@@ -21,4 +28,4 @@ script = ExtResource("1_x2ma6")
 top_level = true
 
 [node name="Spheres" type="MultiMeshInstance3D" parent="Anchor" unique_id=463142713]
-multimesh = SubResource("MultiMesh_newat")
+multimesh = SubResource("MultiMesh_vv0vi")

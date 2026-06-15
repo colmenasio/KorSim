@@ -2,6 +2,7 @@
 
 #include <Eigen/Dense>
 #include <godot_cpp/variant/vector3.hpp>
+#include <cmath>
 
 namespace korsim::util
 {
@@ -52,10 +53,14 @@ namespace korsim::util
         const double sr = std::sin(roll);
 
         // gimball i curse you!!
-        if(std::abs(cp) < epsilon){
-            if(cp >= 0) {
+        if (std::abs(cp) < epsilon)
+        {
+            if (cp >= 0)
+            {
                 cp = epsilon;
-            } else {
+            }
+            else
+            {
                 cp = -epsilon;
             }
         }
@@ -66,7 +71,7 @@ namespace korsim::util
         Eigen::Matrix3d R;
 
         R(0, 0) = 1;
-        R(0, 1) = sr * tp ;
+        R(0, 1) = sr * tp;
         R(0, 2) = cr * tp;
 
         R(1, 0) = 0;
@@ -94,12 +99,11 @@ namespace korsim::util
 
     inline godot::Vector3 eulerAerospaceToGodot(const Eigen::Vector3d &roll_pitch_yaw)
     {
-        //return godot::Vector3(roll_pitch_yaw.x(), -roll_pitch_yaw.z(), roll_pitch_yaw.y());
-        return godot::Vector3(roll_pitch_yaw.y(), -roll_pitch_yaw.z(), -roll_pitch_yaw.x());
+        return godot::Vector3(roll_pitch_yaw.y(), -roll_pitch_yaw.z(), -roll_pitch_yaw.x()) ;//* 180 * M_1_PI;
     }
 
     inline Eigen::Vector3d eulerGodotToAerospace(const godot::Vector3 &roll_pitch_yaw)
     {
-        return Eigen::Vector3d(-roll_pitch_yaw.z, roll_pitch_yaw.x, -roll_pitch_yaw.y);
+        return Eigen::Vector3d(-roll_pitch_yaw.z, roll_pitch_yaw.x, -roll_pitch_yaw.y) ;//* M_PI * 0.00555555555;
     }
 };

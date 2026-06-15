@@ -33,14 +33,14 @@ environment = SubResource("Environment_61t0l")
 [node name="Aircraft" parent="." unique_id=1955491949 instance=ExtResource("1_llqh0")]
 
 [node name="CameraAnchor" type="Node3D" parent="Aircraft" unique_id=1953997857]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 35)
+transform = Transform3D(0.9999999, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 7, 35)
 
 [node name="MainCamera" type="Camera3D" parent="Aircraft/CameraAnchor" unique_id=1411697768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.000001, 35)
+transform = Transform3D(1, 0, 0, 0, 1, 7e-44, 0, -7e-44, 1, 0, 7, 35)
 top_level = true
 current = true
 script = ExtResource("2_jbav3")
-delay_constant = 0.5
+delay_constant = 0.2
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Aircraft/CameraAnchor/MainCamera" unique_id=2072043033]
 mesh = SubResource("SphereMesh_jbav3")
