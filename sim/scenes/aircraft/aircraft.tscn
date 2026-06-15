@@ -2,12 +2,51 @@
 
 [ext_resource type="PackedScene" uid="uid://cxgqt7bbcsk4c" path="res://scenes/grid_sphere_gizmo/grid_sphere_gizmo.tscn" id="1_o0t3e"]
 [ext_resource type="Script" uid="uid://c3bv4imb1ivx0" path="res://scenes/aircraft/aircraft.gd" id="1_ose1e"]
+[ext_resource type="Script" uid="uid://d28dgr3nijb22" path="res://scenes/aircraft/inertial_frame.gd" id="1_tfrf7"]
 [ext_resource type="PackedScene" uid="uid://beau6qytm8b5q" path="res://assets/dassault_mirage_2000/dassault_mirage_2000.glb" id="2_ose1e"]
+[ext_resource type="Script" uid="uid://ndp0v5g8raoc" path="res://scenes/flight/main_camera.gd" id="5_vylvn"]
 
-[node name="Aircraft" type="SixDofAircraft" unique_id=1744680911]
+[sub_resource type="CylinderMesh" id="CylinderMesh_ose1e"]
+top_radius = 0.08
+bottom_radius = 0.08
+height = 10.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ose1e"]
+albedo_color = Color(0.023529412, 0.16078432, 1, 1)
+roughness = 0.67
+
+[sub_resource type="BoxMesh" id="BoxMesh_tfrf7"]
+material = SubResource("StandardMaterial3D_ose1e")
+size = Vector3(0.3, 0.3, 1)
+
+[node name="InertialFrame" type="Node3D" unique_id=114137734]
+process_priority = 1
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_tfrf7")
+
+[node name="Aircraft" type="Node3D" parent="." unique_id=1251374449]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000004, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_ose1e")
 
-[node name="GridSphereGizmo" parent="." unique_id=2090342941 instance=ExtResource("1_o0t3e")]
+[node name="GridSphereGizmo" parent="Aircraft" unique_id=2090342941 instance=ExtResource("1_o0t3e")]
 
-[node name="Dassault" parent="." unique_id=608062687 instance=ExtResource("2_ose1e")]
+[node name="Dassault" parent="Aircraft" unique_id=608062687 instance=ExtResource("2_ose1e")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -2.1342638, 0.37200785)
+
+[node name="CameraAnchor" type="Node3D" parent="Aircraft" unique_id=1141087740]
+transform = Transform3D(0.9999999, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 7, 35)
+
+[node name="MainCamera" type="Camera3D" parent="Aircraft/CameraAnchor" unique_id=1371193805]
+transform = Transform3D(0.9999999, 0, 0, 0, 0.9999994, -3e-45, 0, 3e-45, 0.9999999, 0, -4.7683716e-07, 3.8146973e-06)
+current = true
+script = ExtResource("5_vylvn")
+delay_constant = 0.5
+snap = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=735335816]
+transform = Transform3D(0.9999892, 0, 0, 0, 1.0031105, 0, 0, 0, 0.9999932, 0, 0, 0)
+mesh = SubResource("CylinderMesh_ose1e")
+
+[node name="GravForceVector" type="MeshInstance3D" parent="." unique_id=686169435]
+transform = Transform3D(0.9999828, 0, 0, 0, -4.371116e-08, -11.759999, 0, 0.9999949, -5.1404595e-07, 0, -5.88, 0)
+mesh = SubResource("BoxMesh_tfrf7")

@@ -1,5 +1,7 @@
 #include "model.hpp"
 
+#include "iostream"
+
 using namespace Eigen;
 using namespace korsim::util;
 
@@ -12,8 +14,9 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
 {
     const double g = 9.8;
 
-    Matrix3d R_i2b = rotationFromEuler(x.phi);
-    Matrix3d R_b2i = R_i2b.transpose();
+    Matrix3d R_b2i = rotationFromEuler(x.phi);
+    Matrix3d R_i2b = R_b2i.transpose();
+
     double vel_mod = x.v.norm();
     vel_mod += 1e-4; // ipsilo omega ipslion
 

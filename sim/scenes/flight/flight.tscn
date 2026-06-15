@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cbeilrjqo5k85"]
 
 [ext_resource type="PackedScene" uid="uid://cynqyag4wclwg" path="res://scenes/aircraft/aircraft.tscn" id="1_llqh0"]
-[ext_resource type="Script" uid="uid://ndp0v5g8raoc" path="res://scenes/flight/main_camera.gd" id="2_jbav3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_px3ln"]
 sky_top_color = Color(0.3167163, 0.47200257, 0.5884672, 1)
@@ -18,8 +17,6 @@ sky = SubResource("Sky_jbav3")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_jbav3"]
-
 [node name="Node3D" type="Node3D" unique_id=221097603]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=701824330]
@@ -30,16 +27,3 @@ shadow_enabled = true
 environment = SubResource("Environment_61t0l")
 
 [node name="Aircraft" parent="." unique_id=1955491949 instance=ExtResource("1_llqh0")]
-
-[node name="CameraAnchor" type="Node3D" parent="Aircraft" unique_id=1953997857]
-transform = Transform3D(0.9999999, 0, 0, 0, 1.0000001, 0, 0, 0, 1.0000001, 0, 7, 35)
-
-[node name="MainCamera" type="Camera3D" parent="Aircraft/CameraAnchor" unique_id=1411697768]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7, 35)
-top_level = true
-current = true
-script = ExtResource("2_jbav3")
-delay_constant = 0.2
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Aircraft/CameraAnchor/MainCamera" unique_id=2072043033]
-mesh = SubResource("SphereMesh_jbav3")

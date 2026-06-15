@@ -5,7 +5,7 @@
 #include <godot_cpp/godot.hpp>
 
 #include "classes/test/tf_test.hpp"
-#include "classes/test/six_dof_airship.hpp"
+#include "classes/test/f_e_six_dof_model.hpp"
 
 using namespace godot;
 
@@ -15,7 +15,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	}
 
 	GDREGISTER_CLASS(TfTestNode3D);
-	GDREGISTER_CLASS(SixDofAircraft);
+	GDREGISTER_CLASS(FESixDofModel);
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

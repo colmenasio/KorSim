@@ -1,4 +1,4 @@
-#include "six_dof_airship.hpp"
+#include "f_e_six_dof_model.hpp"
 
 using namespace korsim::six_dof;
 using namespace korsim;
@@ -74,81 +74,71 @@ Parameters createFighterParameters()
     return p;
 }
 
-void SixDofAircraft::_bind_methods()
+void FESixDofModel::_bind_methods()
 { 
-    // Esto cundiria sacarlo para que a ojos de godot el model runner sea un recurso rather que un nodo y hacer los bindings desde godot...
-    ClassDB::bind_method(D_METHOD("update_dynamics", "delta"), &SixDofAircraft::updateDynamics);
-    ClassDB::bind_method(D_METHOD("update_transform"), &SixDofAircraft::updateTransform);
+    ClassDB::bind_method(D_METHOD("compute_dynamics", "delta"), &FESixDofModel::computeDynamics);
+    ClassDB::bind_method(D_METHOD("compute_and_integrate_dynamics"), &FESixDofModel::computeAndIntegrateDynamics);
 
-    ClassDB::bind_method(D_METHOD("set_aileron_deflector", "value"), &SixDofAircraft::setDeltaA);
-    ClassDB::bind_method(D_METHOD("get_aileron_deflector"), &SixDofAircraft::getDeltaA);
+    ClassDB::bind_method(D_METHOD("set_aileron_deflector", "value"), &FESixDofModel::setDeltaA);
+    ClassDB::bind_method(D_METHOD("get_aileron_deflector"), &FESixDofModel::getDeltaA);
 
-    ClassDB::bind_method(D_METHOD("set_rudder_deflector", "value"), &SixDofAircraft::setDeltaR);
-    ClassDB::bind_method(D_METHOD("get_rudder_deflector"), &SixDofAircraft::getDeltaR);
+    ClassDB::bind_method(D_METHOD("set_rudder_deflector", "value"), &FESixDofModel::setDeltaR);
+    ClassDB::bind_method(D_METHOD("get_rudder_deflector"), &FESixDofModel::getDeltaR);
 
-    ClassDB::bind_method(D_METHOD("set_elevator_deflector", "value"), &SixDofAircraft::setDeltaE);
-    ClassDB::bind_method(D_METHOD("get_elevator_deflector"), &SixDofAircraft::getDeltaE);
+    ClassDB::bind_method(D_METHOD("set_elevator_deflector", "value"), &FESixDofModel::setDeltaE);
+    ClassDB::bind_method(D_METHOD("get_elevator_deflector"), &FESixDofModel::getDeltaE);
 
-    ClassDB::bind_method(D_METHOD("set_throttle", "value"), &SixDofAircraft::setEtaT);
-    ClassDB::bind_method(D_METHOD("get_throttle"), &SixDofAircraft::getEtaT);
+    ClassDB::bind_method(D_METHOD("set_throttle", "value"), &FESixDofModel::setEtaT);
+    ClassDB::bind_method(D_METHOD("get_throttle"), &FESixDofModel::getEtaT);
+
+    ClassDB::bind_method(D_METHOD("set_position", "value"), &FESixDofModel::setPosition);
+    ClassDB::bind_method(D_METHOD("get_position"), &FESixDofModel::getPosition);
     
-    ClassDB::bind_method(D_METHOD("set_airspace_velocity", "value"), &SixDofAircraft::setAirspaceVelocity);
-    ClassDB::bind_method(D_METHOD("get_airspace_velocity"), &SixDofAircraft::getAirspaceVelocity);
+    ClassDB::bind_method(D_METHOD("set_rotation", "value"), &FESixDofModel::setRotation);
+    ClassDB::bind_method(D_METHOD("get_rotation"), &FESixDofModel::getRotation);
+    
+    ClassDB::bind_method(D_METHOD("set_airspace_velocity", "value"), &FESixDofModel::setAirspaceVelocity);
+    ClassDB::bind_method(D_METHOD("get_airspace_velocity"), &FESixDofModel::getAirspaceVelocity);
 
-    ClassDB::bind_method(D_METHOD("set_wind_velocity", "value"), &SixDofAircraft::setWindVelocity);
-    ClassDB::bind_method(D_METHOD("get_wind_velocity"), &SixDofAircraft::getWindVelocity);
+    ClassDB::bind_method(D_METHOD("set_wind_velocity", "value"), &FESixDofModel::setWindVelocity);
+    ClassDB::bind_method(D_METHOD("get_wind_velocity"), &FESixDofModel::getWindVelocity);
 
-    ClassDB::bind_method(D_METHOD("get_aerodynamic_force"), &SixDofAircraft::getAerodynamicForce);
-    ClassDB::bind_method(D_METHOD("get_engine_force"), &SixDofAircraft::getEngineForce);
-    ClassDB::bind_method(D_METHOD("get_gravity_force"), &SixDofAircraft::getGravityForce);
+    ClassDB::bind_method(D_METHOD("get_aerodynamic_force"), &FESixDofModel::getAerodynamicForce);
+    ClassDB::bind_method(D_METHOD("get_engine_force"), &FESixDofModel::getEngineForce);
+    ClassDB::bind_method(D_METHOD("get_gravity_force"), &FESixDofModel::getGravityForce);
 
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "aileron_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_aileron_deflector", "get_aileron_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rudder_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_rudder_deflector", "get_rudder_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "elevator_deflector", PROPERTY_HINT_RANGE, "-1.0,1.0,0.01"), "set_elevator_deflector", "get_elevator_deflector");
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "throttle", PROPERTY_HINT_RANGE, "0.0,1.0,0.01"), "set_throttle", "get_throttle");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "airspace_velocity"), "set_airspace_velocity", "get_airspace_velocity");
-    ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "wind_velocity"), "set_airspace_velocity", "get_airspace_velocity");
+    //ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "airspace_velocity"), "set_airspace_velocity", "get_airspace_velocity");
+    //ADD_PROPERTY(PropertyInfo(Variant::VECTOR3, "wind_velocity"), "set_airspace_velocity", "get_airspace_velocity");
 }
 
-SixDofAircraft::SixDofAircraft() : has_exploded(false), logger("log.last")
+FESixDofModel::FESixDofModel() : logger("log.last")
 {
     this->parameters = createFighterParameters();
 }
 
-void SixDofAircraft::updateTransform()
-{
-    if(has_exploded){
-        return;
-    }
-
-    Vector3 new_pos = util::posAerospaceToGodot(state.p);
-    Vector3 new_rot = util::eulerAerospaceToGodot(state.phi);
-    this->has_exploded = !new_pos.is_finite() || !new_rot.is_finite();
-    ERR_FAIL_COND_MSG(has_exploded, "Model went to NaN and exploded. Yippie!!"); 
-
-    this->set_position(new_pos);
-    this->set_rotation(new_rot);
-}
-
-void SixDofAircraft::updateDynamics(double h)
+void FESixDofModel::computeAndIntegrateDynamics(double h)
 {
     // what the fucc is runge kuttaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     // forward euler foreverrrrrrrrrrrrrrrrrrrrrrr
     // rawrrrrrrrrrrrrrrrrrrrrrrrr
-    if(has_exploded){
-        return;
-    }
+    this->computeDynamics(h);
 
     logger.log("---------[State]----------\n");
     logger.log(state);
 
-    model.calculateDynamics(state, control, parameters);
+    logger.log("---------[Dynamics]----------\n");
+    logger.log(model);
 
     Eigen::Matrix<double, 13, 1> x = this->state.toMatrix();
     Eigen::Matrix<double, 13, 1> x_dot = this->model.getDynamics().toMatrix();
-
     this->state.loadMatrix(x + h * x_dot);
-    
-    logger.log("---------[Dynamics]----------\n");
-    logger.log(model);
+}
+
+void FESixDofModel::computeDynamics(double h)
+{
+    model.calculateDynamics(state, control, parameters); 
 }
