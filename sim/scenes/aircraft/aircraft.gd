@@ -7,8 +7,8 @@ var _model_h_leftover: float = 0
 var _model_h_step: float = 0.005
 
 func _ready() -> void:
-	_model.set_airspace_velocity(Vector3.FORWARD * 60)
-	self.rotate(Vector3.LEFT, 60 * PI / 180 )
+	_model.set_airspace_velocity(Vector3.FORWARD * 20)
+	self.rotate(Vector3.LEFT, -10 * PI / 180 )
 	_model.set_rotation(self.rotation)
 	_model.throttle = 0.5
 	_model.elevator_deflector = 0
