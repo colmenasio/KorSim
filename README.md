@@ -1,57 +1,34 @@
 # KorSim
 
-KorSim is a hybrid Godot + native C++ project for flight simulation. The workspace contains a Godot project under `sim/` and a native GDExtension engine module under `engine/`.
+![Alt text](/sim.png)
 
-## Repository structure
+A silly 6-DOF real-time aircraft flight simulator i built in a couple of afternoons as a side project
+Designed for high traceability and straighforward integration with control loop development, leveraging the speed of C++ for dynamic simulation and Godot for visualization and fast iteration cycles
 
-- `engine/`
-  - Native C++ extension code for the Godot module.
-  - `SConstruct` builds the extension using SCons and Godot C++ bindings.
-  - `godot-cpp/` contains the Godot C++ binding generator and build support.
-  - `src/` contains the extension sources, including the six degree-of-freedom model.
-- `sim/`
-  - Godot project files and scenes.
-  - `project.godot` is the main Godot project configuration.
-  - `bin/` contains the built `korsim_engine.gdextension` plugin.
-
-## Key components
-
-- `engine/src/` - native engine implementation, registration, and simulation model.
-- `engine/src/model/six_dof/` - six degree-of-freedom flight model code.
-- `sim/scenes/` - Godot scenes for aircraft, camera, UI, and debug tools.
-- `sim/script/singleton/` - project singleton scripts and simulation entry points.
+> [!NOTE]
+> Notice that the project is minimalistic and still in development. Some features are missing. Many, in fact. Also, Right now there are little quicks such as using Forward Euler instead of something better like Runge Kutta, that are artifacts of the fact that i did this in literally 3 days.
 
 ## Requirements
 
-- Godot Engine 4.6 (or compatible with the project configuration)
-- Python 3 for SCons
-- SCons
-- `eigen3` development headers
+- Godot Engine 4.6 (or forward, shouldn't cause issues if you use the lastest 4.7 release)
+- SCons (4.5+ ) & Dependencies
+- `eigen3` cause eigen is goated
 - A C++ compiler that supports C++17
 
-## Build
+## Building and Running
 
-From the repository root:
+The C++ GDextension must be built beforehand.
 
 ```bash
-cd engine
-scons
+git clone https://github.com/colmenasio/KorSim --depth=1
+cd KorSim/engine
+scons #buldscript automatically exports the .so to sim/bin
 ```
 
-This builds the native extension into `sim/bin/` as a Godot GDExtension library.
+Note that for now only linux is supported.
 
-## Run
-
-Open `sim/project.godot` in Godot and run the project. The project is configured to load the native extension from `sim/bin/korsim_engine.gdextension`.
-
-## Notes
-
-- The native build relies on `godot-cpp` support in `engine/godot-cpp/`.
-- Ensure `eigen3` headers are installed and available at `/usr/include/eigen3` or update `engine/SConstruct` accordingly.
-- The project contains an in-repo Godot project and a custom simulation engine module.
-
-## Development tips
-
-- Rebuild the extension after changing C++ sources.
-- Keep the Godot project open in the editor to refresh resources and input mappings.
-- Use the `sim/` folder for asset, scene, and script changes.
+``bash
+cd ../sim
+/path/to/your/godot/install/Godot.4.6 -p .
+``
+If everything went right, the project loads the Godot loads the extension without exploding, pressing "F5" or clicking the play icon on the top right of the editor should launch you straight into the simulation
