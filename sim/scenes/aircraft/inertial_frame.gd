@@ -1,5 +1,6 @@
 extends Node3D
 
+
 func _process(_delta: float) -> void:
 	update_visual_gizmos()
 
@@ -15,13 +16,13 @@ func update_visual_gizmos():
 	var engine_force_vector = model.get_engine_force()/10000
 	var side_force_vector = model.get_side_force()/10000
 	
-	update_vector_gizmo($ForcesGizmos/FG, grav_force_vector)
-	update_vector_gizmo($ForcesGizmos/FA, aero_force_vector)
-	update_vector_gizmo($ForcesGizmos/FD, drag_force_vector)
-	update_vector_gizmo($ForcesGizmos/FL, lift_force_vector)
-	update_vector_gizmo($ForcesGizmos/FE, engine_force_vector)
-	update_vector_gizmo($ForcesGizmos/FY, side_force_vector)
-
+	update_vector_gizmo($Gizmos/FG, grav_force_vector)
+	update_vector_gizmo($Gizmos/FA, aero_force_vector)
+	update_vector_gizmo($Gizmos/FD, drag_force_vector)
+	update_vector_gizmo($Gizmos/FL, lift_force_vector)
+	update_vector_gizmo($Gizmos/FE, engine_force_vector)
+	update_vector_gizmo($Gizmos/FY, side_force_vector)
+	update_vector_gizmo($Gizmos/Node3D, model.get_airspace_velocity()/5)
 
 func update_vector_gizmo(node: Node3D, vector: Vector3):
 	var mag = vector.length()

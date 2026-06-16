@@ -2,6 +2,14 @@
 
 [ext_resource type="PackedScene" uid="uid://cynqyag4wclwg" path="res://scenes/aircraft/aircraft.tscn" id="1_llqh0"]
 
+[sub_resource type="GDScript" id="GDScript_llqh0"]
+script/source = "extends Node3D
+class_name Flight
+
+func get_airship():
+	return $InertialFrame/Aircraft
+"
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_px3ln"]
 sky_top_color = Color(0.3167163, 0.47200257, 0.5884672, 1)
 sky_horizon_color = Color(0.64611804, 0.6771896, 0.6973058, 1)
@@ -18,6 +26,7 @@ tonemap_mode = 2
 glow_enabled = true
 
 [node name="Node3D" type="Node3D" unique_id=221097603]
+script = SubResource("GDScript_llqh0")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=701824330]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)

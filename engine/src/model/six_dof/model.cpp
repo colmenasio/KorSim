@@ -42,10 +42,13 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
 
     double epsilon = p.epsilon_alpha * (alpha - p.alpha_0);
 
-    alpha_t = alpha - epsilon + u.delta_E + p.CL_q_V * omq * p.l_t / vel_mod; // ESTO EXPLTA PERO TENGO DEMASIADO SUEÑO COMO PARA VER EL SENTIDO FISICO Y POR TANTO QUE VALOR ASINTOTICO DEBERIA TOMAR BUENAS NOCHES
-
+    alpha_t = alpha - epsilon + u.delta_E + p.CL_q_V * omq * p.l_t / vel_mod;  
+    
     std::cout << "meow :3: " << std::endl;
+    std::cout << "vel: " << x.v.transpose() << std::endl;
     std::cout << "aoa: " << alpha << std::endl;
+    std::cout << "aoa tail: " << alpha_t << std::endl;
+    std::cout << "epsilon: " << epsilon << std::endl;
 
     double CL_wb = p.CL_alpha * (alpha - p.alpha_0);
     double CL_t = p.CL_alpha_t * alpha_t * p.S_t / p.S;

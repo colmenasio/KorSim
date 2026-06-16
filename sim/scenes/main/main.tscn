@@ -1,6 +1,11 @@
 [gd_scene format=3 uid="uid://c2p54h8q5tb3u"]
 
 [ext_resource type="Script" uid="uid://gxv4omo3hkby" path="res://scenes/main/main.gd" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://chgdgfb80ggti" path="res://scenes/debug_camera_3d/debug_camera_3d.gd" id="2_iuonh"]
 
 [node name="Main" type="Node" unique_id=982154816]
 script = ExtResource("1_hyk8p")
+
+[node name="DebugCamera3D" type="Camera3D" parent="." unique_id=298559878]
+script = ExtResource("2_iuonh")
+metadata/_custom_type_script = "uid://chgdgfb80ggti"
