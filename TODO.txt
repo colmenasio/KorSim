@@ -1,9 +1,0 @@
-[TODO]
-Headless
-6dof model
-
-[DOCS]
-- 6dof
-goated ->> https://arxiv.org/pdf/2405.16680
-interesting ->> https://www.nas.nasa.gov/assets/nas/pdf/staff/Murman_S_AIAA2003-1246.pdf
-

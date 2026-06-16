@@ -42,8 +42,8 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
 
     double epsilon = p.epsilon_alpha * (alpha - p.alpha_0);
 
-    alpha_t = alpha - epsilon + u.delta_E + p.CL_q_V * omq * p.l_t / vel_mod;  
-    
+    alpha_t = alpha - epsilon + u.delta_E + p.CL_q_V * omq * p.l_t / vel_mod;
+
     double CL_wb = p.CL_alpha * (alpha - p.alpha_0);
     double CL_t = p.CL_alpha_t * alpha_t * p.S_t / p.S;
     CL = CL_t + CL_wb;
@@ -61,8 +61,8 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
     double Y = qh * p.S * CY;
 
     F_L = L * Vector3d(sin_a, 0, -cos_a);
-    F_D = D * Vector3d(-cos_a * cos_b, -sin_b, - sin_a * cos_b);
-    F_Y = Y * Vector3d(-cos_a * sin_b, cos_b, - sin_a * sin_b);
+    F_D = D * Vector3d(-cos_a * cos_b, -sin_b, -sin_a * cos_b);
+    F_Y = Y * Vector3d(-cos_a * sin_b, cos_b, -sin_a * sin_b);
 
     F_a = F_L + F_D + F_Y;
 
