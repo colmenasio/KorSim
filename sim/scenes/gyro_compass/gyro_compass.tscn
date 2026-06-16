@@ -1,0 +1,173 @@
+[gd_scene format=3 uid="uid://b7dism8duq4nt"]
+
+[ext_resource type="Script" uid="uid://gnj73eld7hic" path="res://scenes/gyro_compass/gyro_compass.gd" id="1_0lqbt"]
+[ext_resource type="Shader" uid="uid://dt5o8rwh3y7fq" path="res://scenes/gyro_compass/fade.gdshader" id="1_5skxk"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_0lqbt"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5skxk"]
+shading_mode = 0
+albedo_color = Color(0.8346143, 0.8346143, 0.8346143, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_0lqbt"]
+material = SubResource("StandardMaterial3D_5skxk")
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5tftk"]
+shading_mode = 0
+albedo_color = Color(0.4506483, 0.4506483, 0.45064825, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5skxk"]
+material = SubResource("StandardMaterial3D_5tftk")
+flip_faces = true
+radius = 0.2
+height = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qduni"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.80000001192096
+shader_parameter/max_d = 1.0000000149012
+shader_parameter/albedo = Color(0.2960036, 0.7594936, 0.13987064, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_mbpik"]
+material = SubResource("ShaderMaterial_qduni")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxbff"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.40000000596048
+shader_parameter/max_d = 0.10000000149012
+shader_parameter/albedo = Color(0.2960036, 0.7594936, 0.13987064, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mbpik"]
+material = SubResource("ShaderMaterial_bxbff")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0lqbt"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.80000001192096
+shader_parameter/max_d = 1.0000000149012
+shader_parameter/albedo = Color(0.9529412, 0.23529412, 0.2509804, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_qduni"]
+material = SubResource("ShaderMaterial_0lqbt")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mbpik"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.40000000596048
+shader_parameter/max_d = 0.10000000149012
+shader_parameter/albedo = Color(0.9529412, 0.23529412, 0.2509804, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_tu0bd"]
+material = SubResource("ShaderMaterial_mbpik")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lcdrr"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.80000001192096
+shader_parameter/max_d = 1.0000000149012
+shader_parameter/albedo = Color(0.2901961, 0.5254902, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_k4kvk"]
+material = SubResource("ShaderMaterial_lcdrr")
+radius = 0.1
+height = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0r1lh"]
+render_priority = 0
+shader = ExtResource("1_5skxk")
+shader_parameter/origin = Vector3(0, 0, 0)
+shader_parameter/min_d = 0.40000000596048
+shader_parameter/max_d = 0.10000000149012
+shader_parameter/albedo = Color(0.2901961, 0.5254902, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ttkmh"]
+material = SubResource("ShaderMaterial_0r1lh")
+top_radius = 0.02
+bottom_radius = 0.02
+height = 0.5
+
+[node name="GyroCompass" type="TextureRect" unique_id=2114948946]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_0lqbt")
+stretch_mode = 5
+script = ExtResource("1_0lqbt")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=763428232]
+own_world_3d = true
+transparent_bg = true
+msaa_3d = 1
+
+[node name="Compass" type="Node3D" parent="SubViewport" unique_id=319614839]
+transform = Transform3D(0.99999994, 0, 0, 0, 1.0000002, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Ball" type="Node3D" parent="SubViewport/Compass" unique_id=419653305]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+
+[node name="Ball" type="MeshInstance3D" parent="SubViewport/Compass/Ball" unique_id=111900219]
+transform = Transform3D(0.8000001, 0, 0, 0, 0.8000001, 0, 0, 0, 0.8, 0, 0, 0)
+mesh = SubResource("SphereMesh_0lqbt")
+
+[node name="BallOutline" type="MeshInstance3D" parent="SubViewport/Compass/Ball" unique_id=1970776749]
+mesh = SubResource("SphereMesh_5skxk")
+
+[node name="Y" type="Node3D" parent="SubViewport/Compass" unique_id=1406896041]
+
+[node name="Ball" type="MeshInstance3D" parent="SubViewport/Compass/Y" unique_id=1197492630]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("SphereMesh_mbpik")
+
+[node name="Axis" type="MeshInstance3D" parent="SubViewport/Compass/Y" unique_id=187441578]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.25, 0, 0)
+mesh = SubResource("CylinderMesh_mbpik")
+
+[node name="X" type="Node3D" parent="SubViewport/Compass" unique_id=1961841860]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Ball" type="MeshInstance3D" parent="SubViewport/Compass/X" unique_id=1838118524]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("SphereMesh_qduni")
+
+[node name="Axis" type="MeshInstance3D" parent="SubViewport/Compass/X" unique_id=352404376]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.25, 0, 0)
+mesh = SubResource("CylinderMesh_tu0bd")
+
+[node name="Y2" type="Node3D" parent="SubViewport/Compass" unique_id=2003140343]
+transform = Transform3D(-4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Ball" type="MeshInstance3D" parent="SubViewport/Compass/Y2" unique_id=756303505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0, 0)
+mesh = SubResource("SphereMesh_k4kvk")
+
+[node name="Axis" type="MeshInstance3D" parent="SubViewport/Compass/Y2" unique_id=209789204]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0.25, 0, 0)
+mesh = SubResource("CylinderMesh_ttkmh")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=1835288263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.0180378)
+projection = 1
+fov = 56.9
+size = 1.2

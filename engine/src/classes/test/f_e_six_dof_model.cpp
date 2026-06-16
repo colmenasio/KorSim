@@ -24,7 +24,7 @@ Parameters createFighterParameters()
     // Positions relative to CG (CG = [0,0,0])
     p.p_cg = Eigen::Vector3d(0.0, 0.0, 0.0);
     p.p_ac = Eigen::Vector3d(0.45, 0.0, 0.0); // m (aerodynamic center, 0.45m ahead of CG for static margin)
-    p.p_t = Eigen::Vector3d(-4.2, 0.0, -0.3); // m (engine thrust line, behind and slightly below CG)
+    p.p_t = Eigen::Vector3d(-4.2, 0.0, +0.3); // m (engine thrust line, behind and slightly below CG)
 
     //p.wind_vel = Eigen::Vector3d(8.0, 0.0, 0.0); // m/s (just a little bit o' banter)
     p.wind_vel = Eigen::Vector3d(0.0, 0.0, 0.0); // m/s (just a little bit o' banter)
@@ -103,6 +103,9 @@ void FESixDofModel::_bind_methods()
     ClassDB::bind_method(D_METHOD("set_wind_velocity", "value"), &FESixDofModel::setWindVelocity);
     ClassDB::bind_method(D_METHOD("get_wind_velocity"), &FESixDofModel::getWindVelocity);
 
+    ClassDB::bind_method(D_METHOD("get_lift_force"), &FESixDofModel::getLiftForce);
+    ClassDB::bind_method(D_METHOD("get_drag_force"), &FESixDofModel::getDragForce);
+    ClassDB::bind_method(D_METHOD("get_side_force"), &FESixDofModel::getSideForce);
     ClassDB::bind_method(D_METHOD("get_aerodynamic_force"), &FESixDofModel::getAerodynamicForce);
     ClassDB::bind_method(D_METHOD("get_engine_force"), &FESixDofModel::getEngineForce);
     ClassDB::bind_method(D_METHOD("get_gravity_force"), &FESixDofModel::getGravityForce);

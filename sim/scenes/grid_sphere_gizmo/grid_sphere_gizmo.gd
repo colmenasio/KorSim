@@ -14,7 +14,7 @@ func _process(_delta: float) -> void:
 
 func _generate_ball_grid() -> void:
 	var spheres_per_axis = int(_gizmo_radius / _resolution) * 2 + 1
-	var center = int(spheres_per_axis / 2)
+	@warning_ignore("integer_division") var center = spheres_per_axis / 2
 	
 	var total_spheres = spheres_per_axis * spheres_per_axis * spheres_per_axis
 	if total_spheres > 1000:

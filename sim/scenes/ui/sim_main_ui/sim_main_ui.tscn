@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c4vubgkvtc7q0"]
 
 [ext_resource type="Script" uid="uid://cwf5nfr8ovf2u" path="res://scenes/ui/sim_main_ui/sim_main_ui.gd" id="1_03rme"]
+[ext_resource type="PackedScene" uid="uid://b7dism8duq4nt" path="res://scenes/gyro_compass/gyro_compass.tscn" id="2_hpegg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eslqy"]
 content_margin_top = 2.0
@@ -33,6 +34,9 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hpegg"]
+viewport_path = NodePath("SubViewport")
 
 [node name="SimMainUI" type="CanvasLayer" unique_id=922075414]
 script = ExtResource("1_03rme")
@@ -199,3 +203,36 @@ text = "FPS: "
 [node name="Label2" type="Label" parent="MarginContainer/StatsViualization/MarginContainer/Stats" unique_id=1252895781]
 layout_mode = 2
 text = "Average model timestep: "
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=439985709]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer" unique_id=1709851705]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/MarginContainer" unique_id=888862292]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=125706895]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer" unique_id=1841763541]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GyroCompass" parent="MarginContainer/PanelContainer/MarginContainer/VBoxContainer/PanelContainer/MarginContainer" unique_id=2114948946 instance=ExtResource("2_hpegg")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+texture = SubResource("ViewportTexture_hpegg")
+text_size = Vector2i(200, 200)

@@ -47,9 +47,7 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
     double CL_wb = p.CL_alpha * (alpha - p.alpha_0);
     double CL_t = p.CL_alpha_t * alpha_t * p.S_t / p.S;
     CL = CL_t + CL_wb;
-
     CD = p.CD_0 + p.CD_2 * square(p.CD_alpha * alpha + p.CD_1);
-
     CY = p.CY_beta * beta + p.CY_delta_R * u.delta_R;
 
     Cl = p.Cl_beta * beta + p.Cl_p * omr * p.ch / vel_mod + p.Cl_delta_A * u.delta_A + p.Cl_delta_R * u.delta_R;
@@ -62,9 +60,11 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
     double L = qh * p.S * CL;
     double Y = qh * p.S * CY;
 
-    F_a.x() = L * sin_a - D * cos_a * cos_b - Y * cos_a * sin_b; // !!!!
-    F_a.y() = -D * sin_b + Y * cos_b;
-    F_a.z() = -L * cos_a - D * sin_a * cos_b - Y * sin_a * sin_b;
+    F_L = L * Vector3d(sin_a, 0, -cos_a);
+    F_D = D * Vector3d(-cos_a * cos_b, -sin_b, - sin_a * cos_b);
+    F_Y = Y * Vector3d(-cos_a * sin_b, cos_b, - sin_a * sin_b);
+
+    F_a = F_L + F_D + F_Y;
 
     F_e = Vector3d(2 * x.delta_t * p.mass * g, 0, 0);
 

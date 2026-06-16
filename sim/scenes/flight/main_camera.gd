@@ -1,10 +1,11 @@
-@tool extends Camera3D
+extends Camera3D
 
 @export_range(0.05, 1, 0.1) var delay_constant: float = 0.4
 @export var snap: bool = false:
 	set(value):
 		self.top_level = !value
 		snap = value
+#@export_enum("inertial_frame:true", "body_frame:false") var align_rotation
 
 func _process(delta: float) -> void:
 	# El error no deberia ser lineal sino slerpeado!!

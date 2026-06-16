@@ -7,3 +7,6 @@ func set_control_gauges(da: float, de: float, dr: float, tt: float) -> void:
 	%ControlBarDE.value = de
 	%ControlBarDR.value = dr
 	%ControlBarTT.value = tt
+
+func set_gyro_compass_rotation(rot: Vector3):
+	%GyroCompass.set_compass_rotation(rot)

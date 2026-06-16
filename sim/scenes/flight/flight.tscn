@@ -26,4 +26,4 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=216209300]
 environment = SubResource("Environment_61t0l")
 
-[node name="Aircraft" parent="." unique_id=1955491949 instance=ExtResource("1_llqh0")]
+[node name="InertialFrame" parent="." unique_id=1955491949 instance=ExtResource("1_llqh0")]

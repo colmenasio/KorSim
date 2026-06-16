@@ -19,6 +19,7 @@ namespace korsim::six_dof
         Eigen::Vector3d p_cg; // Pos Center of gravity
         Eigen::Vector3d p_ac; // Pos Aerodynamic center
         Eigen::Vector3d p_t;  // Pos engine
+        double ch; // mean aerodinamic cord
 
         Eigen::Vector3d wind_vel; // wind velocity in intertia frame
         double alpha_0;           // value at which the angle of attack becomes zero
@@ -60,9 +61,17 @@ namespace korsim::six_dof
         double Cn_r;
         double Cn_delta_R;
 
-        double ch; // mean aerodinamic cord
-
         double tau_t; // thrust command delay
+
+        //bool enable_lift;
+        //bool enable_drag;
+        //bool enable_sideforce;
+        //bool enable_sideforce;
+        //bool enable_sideforce;
+        //bool enable_rolling_momenmtum;
+        //bool enable_pitching_momentum;
+        //bool enable_yawing_momenmtum;
+
     };
 
     struct Control
@@ -117,6 +126,10 @@ namespace korsim::six_dof
         double Cl;
         double Cm;
         double Cn;
+
+        Eigen::Vector3d F_L;
+        Eigen::Vector3d F_D;
+        Eigen::Vector3d F_Y;
         
         Eigen::Vector3d F_e;
         Eigen::Vector3d F_a;
@@ -131,8 +144,13 @@ namespace korsim::six_dof
 
         State getDynamics() const { return x_dot; };
 
-        Eigen::Vector3d getEngineForce() const { return F_e; };
+        Eigen::Vector3d getLiftForce() const { return F_L; };
+        Eigen::Vector3d getDragForce() const { return F_D; };
+        Eigen::Vector3d getSideForce() const { return F_Y; };
+
+        /* Sum of Lift, Drag and Side Forces*/
         Eigen::Vector3d getAerodynamicForce() const { return F_a; };
+        Eigen::Vector3d getEngineForce() const { return F_e; };
         Eigen::Vector3d getGravityForce() const { return F_g; };
 
         Eigen::Vector3d getEngineMoment() const { return M_e; };

@@ -21,12 +21,12 @@ class FESixDofModel : public godot::RefCounted
 
     korsim::six_dof::Logger logger;
 
-    protected:
+protected:
     static void _bind_methods();
 
-    public:
-	FESixDofModel();
-	~FESixDofModel(){};
+public:
+    FESixDofModel();
+    ~FESixDofModel() {};
 
     void computeDynamics(double h);
     void computeAndIntegrateDynamics(double h);
@@ -39,14 +39,17 @@ class FESixDofModel : public godot::RefCounted
     godot::Vector3 getWindVelocity() const { return korsim::util::posAerospaceToGodot(parameters.wind_vel); }
     godot::Vector3 getPosition() const { return korsim::util::posAerospaceToGodot(state.p); }
     godot::Vector3 getRotation() const { return korsim::util::eulerAerospaceToGodot(state.phi); }
+    godot::Vector3 getLiftForce() const { return korsim::util::posAerospaceToGodot(model.getLiftForce()); }
+    godot::Vector3 getDragForce() const { return korsim::util::posAerospaceToGodot(model.getDragForce()); }
+    godot::Vector3 getSideForce() const { return korsim::util::posAerospaceToGodot(model.getSideForce()); }
     godot::Vector3 getAerodynamicForce() const { return korsim::util::posAerospaceToGodot(model.getAerodynamicForce()); }
     godot::Vector3 getGravityForce() const { return korsim::util::posAerospaceToGodot(model.getGravityForce()); }
     godot::Vector3 getEngineForce() const { return korsim::util::posAerospaceToGodot(model.getEngineForce()); }
-    
-    void setDeltaA(double value) { control.delta_A = value; }
-    void setDeltaR(double value) { control.delta_R = value; }
-    void setDeltaE(double value) { control.delta_E = value; }
-    void setEtaT(double value) { control.eta_T = value; }
+
+    void setDeltaA(double value) { control.delta_A = godot::CLAMP(value, -1.0, 1.0); }
+    void setDeltaR(double value) { control.delta_R = godot::CLAMP(value, -1.0, 1.0); }
+    void setDeltaE(double value) { control.delta_E = godot::CLAMP(value, -1.0, 1.0); }
+    void setEtaT(double value) { control.eta_T = godot::CLAMP(value, 0.0, 1.0); }
     void setPosition(godot::Vector3 value) { state.p = korsim::util::posGodotToAerospace(value); }
     void setRotation(godot::Vector3 value) { state.phi = korsim::util::eulerGodotToAerospace(value); }
     void setAirspaceVelocity(godot::Vector3 value) { state.v = korsim::util::posGodotToAerospace(value); }

@@ -7,11 +7,12 @@ var _has_exploded : bool = false
 func _ready() -> void:
 	_model.set_airspace_velocity(Vector3.FORWARD * 20)
 	_model.throttle = 0.5
-	_model.elevator_deflector = -0.5
+	_model.elevator_deflector = 0
 	pass
 
 func _process(delta: float) -> void:
 	process_input(delta)
+	ui_update()
 	
 	if _has_exploded:
 		return
@@ -48,10 +49,13 @@ func process_input(delta: float) -> void:
 		self._model.throttle += _control_input_speed * delta
 	elif Input.is_action_pressed("throttle_decrease"):
 		self._model.throttle -= _control_input_speed * delta
-	
+
+func ui_update():
 	Sim.get_main_ui().set_control_gauges(
 		self._model.aileron_deflector,
 		self._model.elevator_deflector,
 		self._model.rudder_deflector,
 		self._model.throttle
 	)
+	
+	Sim.get_main_ui().set_gyro_compass_rotation(self.rotation)
