@@ -26,3 +26,6 @@ func unload_current_scene():
 
 func get_main_ui() -> SimMainUI:
 	return _main_ui
+
+func get_active_scene() -> Node:
+	return _curr_scene

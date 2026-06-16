@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c4vubgkvtc7q0"]
 
 [ext_resource type="Script" uid="uid://cwf5nfr8ovf2u" path="res://scenes/ui/sim_main_ui/sim_main_ui.gd" id="1_03rme"]
+[ext_resource type="Script" uid="uid://bbseyq2l4xgle" path="res://scenes/ui/sim_main_ui/pause_icon.gd" id="2_hahf3"]
 [ext_resource type="PackedScene" uid="uid://b7dism8duq4nt" path="res://scenes/gyro_compass/gyro_compass.tscn" id="2_hpegg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eslqy"]
@@ -35,7 +36,24 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 corner_detail = 4
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_hpegg"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpegg"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.8646751, 0.86467516, 0.8646751, 0.6)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 0.78039217)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_hahf3"]
 viewport_path = NodePath("SubViewport")
 
 [node name="SimMainUI" type="CanvasLayer" unique_id=922075414]
@@ -180,29 +198,56 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="StatsViualization" type="PanelContainer" parent="MarginContainer" unique_id=605579237]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=101119515]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="StatsViualization" type="PanelContainer" parent="MarginContainer/VBoxContainer" unique_id=605579237]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/StatsViualization" unique_id=1117152359]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/StatsViualization" unique_id=1117152359]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Stats" type="VBoxContainer" parent="MarginContainer/StatsViualization/MarginContainer" unique_id=1210251835]
+[node name="Stats" type="VBoxContainer" parent="MarginContainer/VBoxContainer/StatsViualization/MarginContainer" unique_id=1210251835]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
-[node name="Label" type="Label" parent="MarginContainer/StatsViualization/MarginContainer/Stats" unique_id=1669071500]
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/StatsViualization/MarginContainer/Stats" unique_id=1669071500]
 layout_mode = 2
 text = "FPS: "
 
-[node name="Label2" type="Label" parent="MarginContainer/StatsViualization/MarginContainer/Stats" unique_id=1252895781]
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/StatsViualization/MarginContainer/Stats" unique_id=1252895781]
 layout_mode = 2
 text = "Average model timestep: "
+
+[node name="PauseIcon" type="Control" parent="MarginContainer/VBoxContainer" unique_id=1469880548]
+unique_name_in_owner = true
+process_mode = 3
+visible = false
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+script = ExtResource("2_hahf3")
+
+[node name="Panel2" type="Panel" parent="MarginContainer/VBoxContainer/PauseIcon" unique_id=1036392168]
+layout_mode = 0
+offset_left = -67.0
+offset_right = -37.0
+offset_bottom = 85.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hpegg")
+
+[node name="Panel" type="Panel" parent="MarginContainer/VBoxContainer/PauseIcon" unique_id=1907047832]
+layout_mode = 0
+offset_left = -32.0
+offset_right = -2.0
+offset_bottom = 85.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hpegg")
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer" unique_id=439985709]
 layout_mode = 2
@@ -234,5 +279,5 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
-texture = SubResource("ViewportTexture_hpegg")
+texture = SubResource("ViewportTexture_hahf3")
 text_size = Vector2i(200, 200)
