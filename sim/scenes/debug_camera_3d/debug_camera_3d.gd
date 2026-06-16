@@ -11,7 +11,7 @@ var movement_active := false:
 		movement_active = val
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if movement_active else Input.MOUSE_MODE_VISIBLE)
 
-var target_speed := (MIN_SPEED + MAX_SPEED)/2
+@warning_ignore("integer_division") var target_speed := (MIN_SPEED + MAX_SPEED)/2
 var velocity := Vector3.ZERO
 
 
@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if movement_active:
+	if movement_active and Input.is_action_pressed("debug_camera_allow_rotation"):
 		# Turn around
 		if event is InputEventMouseMotion:
 			#pivot.rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
@@ -63,12 +63,12 @@ func _add_keybindings() -> void:
 	if "__debug_camera_back" 	not in actions: _add_key_input_action("__debug_camera_back", KEY_S)
 	if "__debug_camera_left" 	not in actions: _add_key_input_action("__debug_camera_left", KEY_A)
 	if "__debug_camera_right" 	not in actions: _add_key_input_action("__debug_camera_right", KEY_D)
-	if "__debug_camera_shift" 		not in actions: _add_key_input_action("__debug_camera_shift", KEY_SHIFT)
+	if "__debug_camera_shift" 	not in actions: _add_key_input_action("__debug_camera_shift", KEY_SHIFT)
 
 
-func _add_key_input_action(name: String, key: Key) -> void:
+func _add_key_input_action(_name: String, key: Key) -> void:
 	var ev = InputEventKey.new()
 	ev.physical_keycode = key
 	
-	InputMap.add_action(name)
-	InputMap.action_add_event(name, ev)
+	InputMap.add_action(_name)
+	InputMap.action_add_event(_name, ev)

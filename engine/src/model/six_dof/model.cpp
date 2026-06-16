@@ -44,35 +44,23 @@ void korsim::six_dof::Model::calculateDynamics(const State &x, const Control &u,
 
     alpha_t = alpha - epsilon + u.delta_E + p.CL_q_V * omq * p.l_t / vel_mod;  
     
-    std::cout << "meow :3: " << std::endl;
-    std::cout << "vel: " << x.v.transpose() << std::endl;
-    std::cout << "aoa: " << alpha << std::endl;
-    std::cout << "aoa tail: " << alpha_t << std::endl;
-    std::cout << "epsilon: " << epsilon << std::endl;
-
     double CL_wb = p.CL_alpha * (alpha - p.alpha_0);
     double CL_t = p.CL_alpha_t * alpha_t * p.S_t / p.S;
     CL = CL_t + CL_wb;
     CD = p.CD_0 + p.CD_2 * square(p.CD_alpha * alpha + p.CD_1);
     CY = p.CY_beta * beta + p.CY_delta_R * u.delta_R;
 
-    std::cout << "CL_wb: " << CL_wb << std::endl;
-    std::cout << "CL_t: " << CL_t  << std::endl;
-
     Cl = p.Cl_beta * beta + p.Cl_p * omr * p.ch / vel_mod + p.Cl_delta_A * u.delta_A + p.Cl_delta_R * u.delta_R;
     Cm = p.Cm_0 + (p.Cm_alpha * (alpha - epsilon) + p.Cm_q * p.l_t * omq / vel_mod + p.Cm_delta_E * u.delta_E) * p.S_t * p.l_t / (p.S * p.ch);
     Cn = p.Cn_beta * beta + p.Cn_alpha_beta * alpha * beta + p.Cn_p * p.ch * omp / vel_mod + p.Cn_r * p.ch * omr / vel_mod + p.Cn_delta_R * u.delta_R;
 
     double qh = p.air_density * vel_mod * vel_mod / 2;
-    std::cout << "qh: " << qh << std::endl;
 
     double D = qh * p.S * CD;
     double L = qh * p.S * CL;
     double Y = qh * p.S * CY;
-    std::cout << "L: " << L << std::endl;
 
     F_L = L * Vector3d(sin_a, 0, -cos_a);
-    std::cout << "FL: " << F_L.transpose() << std::endl;
     F_D = D * Vector3d(-cos_a * cos_b, -sin_b, - sin_a * cos_b);
     F_Y = Y * Vector3d(-cos_a * sin_b, cos_b, - sin_a * sin_b);
 

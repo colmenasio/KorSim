@@ -10,7 +10,7 @@ func _ready() -> void:
 	Sim.initialize(self)
 	Sim.load_flight_scene()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 	if Input.is_action_just_pressed("pause_sim"):
 		self._is_paused = ! self._is_paused

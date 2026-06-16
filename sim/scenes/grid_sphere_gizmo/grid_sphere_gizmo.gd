@@ -1,4 +1,3 @@
-@tool
 extends Node3D
 
 var _gizmo_radius: float = 180

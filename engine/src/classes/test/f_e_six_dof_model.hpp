@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Eigen/Dense>
 
 #include <util/util.hpp>
@@ -35,6 +37,9 @@ public:
     double getDeltaR() const { return control.delta_R; }
     double getDeltaE() const { return control.delta_E; }
     double getEtaT() const { return control.eta_T; }
+    double getAngleOfAttack() const { return model.getAngleOfAttack(); }
+    double getAngleOfAttackTail() const { return model.getAngleOfAttackTail(); }
+    double getSideslipAngle() const { return model.getSideslipAngle(); }
     godot::Vector3 getAirspaceVelocity() const { return korsim::util::posAerospaceToGodot(state.v); }
     godot::Vector3 getWindVelocity() const { return korsim::util::posAerospaceToGodot(parameters.wind_vel); }
     godot::Vector3 getPosition() const { return korsim::util::posAerospaceToGodot(state.p); }

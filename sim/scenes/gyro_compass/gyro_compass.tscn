@@ -42,7 +42,7 @@ height = 0.2
 render_priority = 0
 shader = ExtResource("1_5skxk")
 shader_parameter/origin = Vector3(0, 0, 0)
-shader_parameter/min_d = 0.40000000596048
+shader_parameter/min_d = 0.20000000298024
 shader_parameter/max_d = 0.10000000149012
 shader_parameter/albedo = Color(0.2960036, 0.7594936, 0.13987064, 1)
 
@@ -69,7 +69,7 @@ height = 0.2
 render_priority = 0
 shader = ExtResource("1_5skxk")
 shader_parameter/origin = Vector3(0, 0, 0)
-shader_parameter/min_d = 0.40000000596048
+shader_parameter/min_d = 0.20000000298024
 shader_parameter/max_d = 0.10000000149012
 shader_parameter/albedo = Color(0.9529412, 0.23529412, 0.2509804, 1)
 
@@ -96,7 +96,7 @@ height = 0.2
 render_priority = 0
 shader = ExtResource("1_5skxk")
 shader_parameter/origin = Vector3(0, 0, 0)
-shader_parameter/min_d = 0.40000000596048
+shader_parameter/min_d = 0.20000000298024
 shader_parameter/max_d = 0.10000000149012
 shader_parameter/albedo = Color(0.2901961, 0.5254902, 1, 1)
 
