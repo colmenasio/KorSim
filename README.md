@@ -27,7 +27,7 @@ scons #buldscript automatically exports the .so to sim/bin
 
 Note that for now only linux is supported.
 
-``bash
+```bash
 cd ../sim
 /path/to/your/godot/install/Godot.4.6 -p .
 ``
