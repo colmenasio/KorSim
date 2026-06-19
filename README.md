@@ -30,7 +30,7 @@ Note that for now only linux is supported.
 ```bash
 cd ../sim
 /path/to/your/godot/install/Godot.4.6 -p .
-``
+```
 If everything went right, the project loads the Godot loads the extension without exploding, pressing "F5" or clicking the play icon on the top right of the editor should launch you straight into the simulation
 
 ## About the Model
